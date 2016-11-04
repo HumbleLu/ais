@@ -1,7 +1,6 @@
 ## True value: 0.2506628
 ## p_n: N(1, 1)
-
-source(AIS.R)
+source("https://raw.githubusercontent.com/HumbleLu/ais/master/ais.R")
 ## beta setting
 beta<- rev(c(0, sort(unique(runif(40 - 1, 0, 1))), 1))
 
