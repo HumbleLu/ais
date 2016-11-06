@@ -1,3 +1,5 @@
+library(doParallel)
+
 beta.check<- function(beta){
   if (!beta[1] == 1){
     stop("first element of beta should be equal to 1")
@@ -44,7 +46,11 @@ ais.sampler<- function(beta, logf, trans, rprior){
   logw
 }
 
-ais<- function(k, beta, logf, trans, rprior){
-  logw<- replicate(k, ais.sampler(beta, logf = logf, trans = trans, rprior = rprior))
+ais<- function(k, beta, logf, trans, rprior, cores = 3){
+  #logw<- replicate(k, ais.sampler(beta, logf = logf, trans = trans, rprior = rprior))
+  registerDoParallel(cores = cores)
+  logw<- unlist(foreach(i=1:k) %dopar% ais.sampler(beta, logf = logf, trans = trans, rprior = rprior))
   logw
 }
+
+
